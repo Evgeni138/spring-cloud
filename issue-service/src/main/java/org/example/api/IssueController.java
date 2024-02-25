@@ -2,6 +2,9 @@ package org.example.api;
 
 import com.github.javafaker.Faker;
 import jakarta.annotation.PostConstruct;
+import org.example.Timed;
+import org.example.aspect.Loggable;
+import org.slf4j.event.Level;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,11 +28,15 @@ public class IssueController {
         refresh();
     }
 
+    @Timed
+    @Loggable(level = Level.INFO)
     @GetMapping
     public List<Issue> getAll() {
         return issues;
     }
 
+    @Timed
+    @Loggable(level = Level.INFO)
     @GetMapping("/refresh")
     public List<Issue> refresh() {
         refreshData();
